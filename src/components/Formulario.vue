@@ -1,27 +1,32 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import Temporizador from './Temporizador.vue'
+
+let descricao = ref<string>('')
+
+function finalizarTarefa(segundos: number): void {
+  console.log(segundos)
+  console.log(descricao.value)
+
+  descricao.value = ''
+}
+</script>
 
 <template>
   <div class="box">
     <div class="columns">
       <div class="column is-8" role="form" aria-label="Formulário para criação de uma nova tarefa!">
-        <input type="text" class="input" placeholder="Qual tarefa você deseja iniciar?" />
+        <input
+          type="text"
+          class="input"
+          placeholder="Qual tarefa você deseja iniciar?"
+          v-model="descricao"
+        />
+      </div>
+      <div class="column">
+        <Temporizador @temporizador-parado="finalizarTarefa($event)" />
       </div>
     </div>
-  </div>
-  <div class="column">
-    <section>00:00:00</section>
-    <button class="button">
-      <span class="icon">
-        <i class="fas fa-play"></i>
-      </span>
-      <span>play</span>
-    </button>
-    <button class="button">
-      <span class="icon">
-        <i class="fas fa-stop"></i>
-      </span>
-      <span>stop</span>
-    </button>
   </div>
 </template>
 
