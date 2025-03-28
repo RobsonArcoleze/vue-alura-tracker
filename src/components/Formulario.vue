@@ -3,11 +3,16 @@ import { ref } from 'vue'
 import Temporizador from './Temporizador.vue'
 
 let descricao = ref<string>('')
+const emits = defineEmits<{
+  (event: 'descricaoEmitida', value: string): void
+  (event: 'tempoSegundos', value: number): void
+  (event: 'adcionarTarefa'): void
+}>()
 
 function finalizarTarefa(segundos: number): void {
-  console.log(segundos)
-  console.log(descricao.value)
-
+  emits('descricaoEmitida', descricao.value)
+  emits('tempoSegundos', segundos)
+  emits('adcionarTarefa')
   descricao.value = ''
 }
 </script>
