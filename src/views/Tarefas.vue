@@ -7,12 +7,14 @@ import { ref } from 'vue'
 const tarefas = ref<ITarefa[]>([])
 const descricao = ref<string>('')
 const segundos = ref<number>(0)
+const tarefa = ref<ITarefa>()
 
 function adcionarTarefa() {
-  if (descricao.value && segundos.value > 0) {
+  if (tarefa.value?.descricao && tarefa.value.segundos > 0) {
     tarefas.value.push({
-      descricao: descricao.value,
-      segundos: segundos.value,
+      descricao: tarefa.value.descricao,
+      segundos: tarefa.value.segundos,
+      projeto: tarefa.value.projeto,
     })
     descricao.value = ''
     segundos.value = 0
@@ -30,6 +32,7 @@ function excluirTarefa(tarefa: ITarefa) {
     @descricao-emitida="descricao = $event"
     @tempo-segundos="segundos = $event"
     @adcionar-tarefa="adcionarTarefa"
+    @ao-salvar-tarefa="tarefa = $event"
   />
   <div class="lista" v-for="tar in tarefas" :key="tar.descricao">
     <Tarefa

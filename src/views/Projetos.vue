@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type IProjetos from '@/interface/IProjeto'
+import { useProjetoStore } from '@/store'
 import { ref } from 'vue'
 
 const nomeDoProjeto = ref<string>('')
 const projetos = ref<IProjetos[]>([])
+const store = useProjetoStore()
 
 function salvar() {
   const projeto: IProjetos = {
@@ -11,6 +13,9 @@ function salvar() {
     nome: nomeDoProjeto.value,
   }
   projetos.value.push(projeto)
+
+  store.insertProjeto(nomeDoProjeto.value)
+
   nomeDoProjeto.value = ''
 }
 </script>
@@ -41,7 +46,7 @@ function salvar() {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="projeto in projetos" :key="projeto.id">
+        <tr v-for="projeto in store.projetos" :key="projeto.id">
           <td>{{ projeto.id }}</td>
           <td>{{ projeto.nome }}</td>
         </tr>
