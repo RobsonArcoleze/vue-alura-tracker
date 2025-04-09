@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import Temporizador from './Temporizador.vue'
 import { useProjetoStore } from '@/store'
-import type IProjetos from '@/interface/IProjeto'
 import type { ITarefa } from '@/interface/ITarefa'
 
 let descricao = ref<string>('')

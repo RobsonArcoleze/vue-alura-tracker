@@ -11,6 +11,11 @@ export const useProjetoStore = defineStore('projeto', {
   }),
   getters: {},
   actions: {
+    editProjeto(projeto: IProjetos) {
+      const index = this.projetos.findIndex((proj) => proj.id == projeto.id)
+      this.projetos[index] = projeto
+    },
+
     insertProjeto(nome: string) {
       this.projetos.push({
         id: new Date().toISOString(),

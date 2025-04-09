@@ -1,22 +1,43 @@
 <script setup lang="ts">
 import type IProjetos from '@/interface/IProjeto'
+import roteador from '@/router'
 import { useProjetoStore } from '@/store'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const nomeDoProjeto = ref<string>('')
 const projetos = ref<IProjetos[]>([])
 const store = useProjetoStore()
 
+const props = defineProps<{
+  id: string
+}>()
+
+onMounted(() => {
+  if (props.id) {
+    const project = store.projetos.find((proj) => proj.id == props.id)
+    nomeDoProjeto.value = project?.nome || ''
+  }
+})
+
 function salvar() {
+  if (props.id) {
+    store.editProjeto({
+      id: props.id,
+      nome: nomeDoProjeto.value,
+    })
+  } else {
+    store.insertProjeto(nomeDoProjeto.value)
+  }
+
   const projeto: IProjetos = {
     id: new Date().toISOString(),
     nome: nomeDoProjeto.value,
   }
+
   projetos.value.push(projeto)
 
-  store.insertProjeto(nomeDoProjeto.value)
-
   nomeDoProjeto.value = ''
+  roteador.push('/projetos')
 }
 </script>
 
@@ -38,20 +59,6 @@ function salvar() {
         <button class="button" type="submit">Salvar</button>
       </div>
     </form>
-    <table class="table is-fullwidth">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="projeto in store.projetos" :key="projeto.id">
-          <td>{{ projeto.id }}</td>
-          <td>{{ projeto.nome }}</td>
-        </tr>
-      </tbody>
-    </table>
   </section>
 </template>
 
