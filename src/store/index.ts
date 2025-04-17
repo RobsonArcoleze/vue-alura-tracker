@@ -22,5 +22,9 @@ export const useProjetoStore = defineStore('projeto', {
         nome: nome,
       })
     },
+
+    removeProjeto(id: string) {
+      this.projetos = this.projetos.filter((proj) => proj.id !== id)
+    },
   },
 })
