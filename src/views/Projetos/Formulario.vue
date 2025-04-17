@@ -42,8 +42,7 @@ function salvar() {
 </script>
 
 <template>
-  <section class="projetos">
-    <h1 class="title">Projetos</h1>
+  <section>
     <form @submit.prevent="salvar">
       <div class="field">
         <label for="nomeDoProjeto" class="label">Nome do Projeto</label>
@@ -62,8 +61,4 @@ function salvar() {
   </section>
 </template>
 
-<style scoped>
-.projetos {
-  padding: 1.5rem;
-}
-</style>
+<style scoped></style>
