@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BarraLateral from './components/BarraLateral.vue'
+import Notificacoes from './components/Notificacoes.vue'
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import BarraLateral from './components/BarraLateral.vue'
       <BarraLateral />
     </div>
     <div class="column is-three-quarter">
+      <Notificacoes />
       <!-- aqui vai a rota -->
       <RouterView></RouterView>
     </div>

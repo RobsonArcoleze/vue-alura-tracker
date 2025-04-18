@@ -1,13 +1,16 @@
+import type { INotificacao } from '@/interface/INotificacao'
 import type IProjetos from '@/interface/IProjeto'
 import { defineStore } from 'pinia'
 
 interface Estado {
   projetos: IProjetos[]
+  notificacoes: INotificacao[]
 }
 
 export const useProjetoStore = defineStore('projeto', {
   state: (): Estado => ({
     projetos: [],
+    notificacoes: [],
   }),
   getters: {},
   actions: {
@@ -25,6 +28,14 @@ export const useProjetoStore = defineStore('projeto', {
 
     removeProjeto(id: string) {
       this.projetos = this.projetos.filter((proj) => proj.id !== id)
+    },
+
+    removerNotificaca(id: number) {
+      this.notificacoes = this.notificacoes.filter((not) => not.id !== id)
+    },
+
+    notificar(notificacao: INotificacao) {
+      this.notificacoes.push(notificacao)
     },
   },
 })

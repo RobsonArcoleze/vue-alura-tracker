@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import Formulario from '@/components/Formulario.vue'
 import Tarefa from '@/components/Tarefa.vue'
+import { TipoNotificacaoEnum } from '@/interface/INotificacao'
 import type { ITarefa } from '@/interface/ITarefa'
+import { useProjetoStore } from '@/store'
 import { ref } from 'vue'
 
 const tarefas = ref<ITarefa[]>([])
 const descricao = ref<string>('')
 const segundos = ref<number>(0)
 const tarefa = ref<ITarefa>()
+const store = useProjetoStore()
 
 function adcionarTarefa() {
   if (tarefa.value?.descricao && tarefa.value.segundos > 0) {
@@ -15,6 +18,13 @@ function adcionarTarefa() {
       descricao: tarefa.value.descricao,
       segundos: tarefa.value.segundos,
       projeto: tarefa.value.projeto,
+    })
+    store.notificar({
+      id: new Date().getTime(),
+      texto: `Projeto ${tarefa.value} foi criada!`,
+      titulo: 'Sucesso!',
+      tipo: TipoNotificacaoEnum.SUCCESS,
+      time: 10000,
     })
     descricao.value = ''
     segundos.value = 0

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { TipoNotificacaoEnum } from '@/interface/INotificacao'
 import type IProjetos from '@/interface/IProjeto'
 import roteador from '@/router'
 import { useProjetoStore } from '@/store'
@@ -25,8 +26,21 @@ function salvar() {
       id: props.id,
       nome: nomeDoProjeto.value,
     })
+    store.notificar({
+      id: new Date().getTime(),
+      texto: `Projeto ${nomeDoProjeto.value} foi editado!`,
+      titulo: 'Atenção!',
+      tipo: TipoNotificacaoEnum.WARNING,
+      time: 5000,
+    })
   } else {
     store.insertProjeto(nomeDoProjeto.value)
+    store.notificar({
+      id: new Date().getTime(),
+      texto: `Projeto ${nomeDoProjeto.value} foi salvo!`,
+      titulo: 'Sucesso!',
+      tipo: TipoNotificacaoEnum.SUCCESS,
+    })
   }
 
   const projeto: IProjetos = {
